@@ -55,7 +55,8 @@ class Pawn(Piece):
 		return moves
 
 
-
+def isPositionInBounds(position):
+	return position.x >= 0 and position.x <= 7 and position.y >= 0 and position.y <= 7
 #class Board:
 
 	#Board will contain a dictionary of Position -> Piece for both black and white. This will be useful in finding out whether or not a piece can move to a position.
