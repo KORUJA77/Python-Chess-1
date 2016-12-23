@@ -55,6 +55,8 @@ class Pawn(Piece):
 		return moves
 
 
+def isPositionInBounds(position):
+	return position.x >= 0 and position.x <= 7 and position.y >= 0 and position.y <= 7
 
 #class Board:
 
@@ -135,6 +137,41 @@ class TestPawnMethods(unittest.TestCase):
     	expected_moves.append(Position(0, 4))
     	expected_moves.append(Position(1, 5))
     	self.assertListEqual(moves, expected_moves)
+
+class TestIsPositionInBounds(unittest.TestCase):
+
+    def test_is_origin_in_bounds(self):
+        posOrigin = Position(0, 0)
+        self.assertTrue(isPositionInBounds(posOrigin))
+
+    def test_is_top_right_in_bounds(self):
+        pos = Position(7, 7)
+        self.assertTrue(isPositionInBounds(pos))
+
+    def test_is_top_left_in_bounds(self):
+        pos = Position(0, 7)
+        self.assertTrue(isPositionInBounds(pos))
+
+    def test_is_x_8_out_bounds(self):
+        pos = Position(8, 4)
+        self.assertFalse(isPositionInBounds(pos))
+
+    def test_is_x_negative_out_bounds(self):
+        pos = Position(-1, 4)
+        self.assertFalse(isPositionInBounds(pos))
+
+    def test_is_y_negative_out_bounds(self):
+        pos = Position(1, -4)
+        self.assertFalse(isPositionInBounds(pos))
+
+    def test_is_both_negative_out_bounds(self):
+        pos = Position(-1, -4)
+        self.assertFalse(isPositionInBounds(pos))
+
+    def test_is_y_8_out_bounds(self):
+        pos = Position(2, 8)
+        self.assertFalse(isPositionInBounds(pos))
+
 
         
 
