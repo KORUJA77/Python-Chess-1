@@ -55,9 +55,31 @@ class Pawn(Piece):
 			moves.append(takeRight)
 		return moves
 
+#Class to represent a knight piece
+class Knight(Piece):
+
+	def __init__(self, pos=Position(), isWhite=True):
+		super().__init__(pos, isWhite)
+
+	def getAllMoves(self):
+		moves = []
+		for i in range(1, 3):
+			moves.append(Position(self.pos.x - i, self.pos.y + 3 - i))
+			moves.append(Position(self.pos.x - i, self.pos.y - 3 + i))
+			moves.append(Position(self.pos.x + i, self.pos.y + 3 - i))
+			moves.append(Position(self.pos.x + i, self.pos.y - 3 + i))
+		filtered_moves = [pos for pos in moves if isPositionInBounds(pos)]
+		return filtered_moves
+
+
 
 def isPositionInBounds(position):
 	return position.x >= 0 and position.x <= 7 and position.y >= 0 and position.y <= 7
+
+knight = Knight(Position(0, 0))
+
+for pos in knight.getAllMoves():
+	print(pos.to_string())
 
 #class Board:
 
