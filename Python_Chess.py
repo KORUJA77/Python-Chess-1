@@ -61,13 +61,31 @@ class Knight(Piece):
 	def __init__(self, pos=Position(), isWhite=True):
 		super().__init__(pos, isWhite)
 
+
+	'''
+	Diagram of Knight's possible moves:
+	7 - - - - - - - -
+	6 - - - X - X - -
+	5 - - X - - - X -
+	4 - - - - N - - -
+	3 - - X - - - X -
+	2 - - - X - X - -
+	1 - - - - - - - -
+	0 - - - - - - - -
+  	  0 1 2 3 4 5 6 7
+  	'''
 	def getAllMoves(self):
 		moves = []
-		for i in range(1, 3):
-			moves.append(Position(self.pos.x - i, self.pos.y + 3 - i))
-			moves.append(Position(self.pos.x - i, self.pos.y - 3 + i))
-			moves.append(Position(self.pos.x + i, self.pos.y + 3 - i))
-			moves.append(Position(self.pos.x + i, self.pos.y - 3 + i))
+		'''
+		How this works: Gets Knight moves for each column of diagram above, skips
+		0 as there is nothing at 0. Uses the fact that the knight always moves 3 squares to its advantage.
+		'''
+		for i in range(-2, 3):
+			if i == 0:
+				continue
+			moves.append(Position(self.pos.x + i, self.pos.y + 3 - abs(i)))
+			moves.append(Position(self.pos.x + i, self.pos.y - 3 + abs(i)))
+		#Gets rid of any moves that are out of bounds.
 		filtered_moves = [pos for pos in moves if isPositionInBounds(pos)]
 		return filtered_moves
 
