@@ -94,13 +94,8 @@ class Knight(Piece):
 def isPositionInBounds(position):
 	return position.x >= 0 and position.x <= 7 and position.y >= 0 and position.y <= 7
 
-knight = Knight(Position(0, 0))
-
-for pos in knight.getAllMoves():
-	print(pos.to_string())
 
 #class Board:
 
 	#Board will contain a dictionary of Position -> Piece for both black and white. This will be useful in finding out whether or not a piece can move to a position.
-
 
