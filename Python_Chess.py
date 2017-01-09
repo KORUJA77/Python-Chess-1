@@ -89,12 +89,60 @@ class Knight(Piece):
 		filtered_moves = [pos for pos in moves if isPositionInBounds(pos)]
 		return filtered_moves
 
+#Class to represent a knight piece
+class Bishop(Piece):
+
+	def __init__(self, pos=Position(), isWhite=True):
+		super().__init__(pos, isWhite)
+
+
+	'''
+	Diagram of Bishop's possible moves:
+	7 - X - - - - - X
+	6 - - X - - - X -
+	5 - - - X - X - -
+	4 - - - - B - - -
+	3 - - - X - X - -
+	2 - - X - - - X -
+	1 - X - - - - - X
+	0 X - - - - - - -
+  	  0 1 2 3 4 5 6 7
+  	'''
+	def getAllMoves(self):
+		moves = []
+		'''
+		How this works: Loops through the four paterns -- Up right, up left, down right, and down left.
+		'''
+
+		curr_position = Position(self.pos.x + 1, self.pos.y + 1)
+		while (isPositionInBounds(curr_position)):
+			moves.append(curr_position)
+			curr_position = Position(curr_position.x + 1, curr_position.y + 1)
+
+		curr_position = Position(self.pos.x + 1, self.pos.y - 1)
+		while (isPositionInBounds(curr_position)):
+			moves.append(curr_position)
+			curr_position = Position(curr_position.x + 1, curr_position.y - 1)
+
+		curr_position = Position(self.pos.x - 1, self.pos.y + 1)
+		while (isPositionInBounds(curr_position)):
+			moves.append(curr_position)
+			curr_position = Position(curr_position.x - 1, curr_position.y + 1)
+
+		curr_position = Position(self.pos.x - 1, self.pos.y - 1)
+		while (isPositionInBounds(curr_position)):
+			moves.append(curr_position)
+			curr_position = Position(curr_position.x - 1, curr_position.y - 1)
+		return moves
+
 
 
 def isPositionInBounds(position):
 	return position.x >= 0 and position.x <= 7 and position.y >= 0 and position.y <= 7
 
-
+bishop = Bishop(Position(4, 4))
+for move in bishop.getAllMoves():
+	print(move.to_string())
 #class Board:
 
 	#Board will contain a dictionary of Position -> Piece for both black and white. This will be useful in finding out whether or not a piece can move to a position.
