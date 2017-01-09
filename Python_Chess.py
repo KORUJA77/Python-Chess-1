@@ -55,12 +55,47 @@ class Pawn(Piece):
 			moves.append(takeRight)
 		return moves
 
+#Class to represent a knight piece
+class Knight(Piece):
+
+	def __init__(self, pos=Position(), isWhite=True):
+		super().__init__(pos, isWhite)
+
+
+	'''
+	Diagram of Knight's possible moves:
+	7 - - - - - - - -
+	6 - - - X - X - -
+	5 - - X - - - X -
+	4 - - - - N - - -
+	3 - - X - - - X -
+	2 - - - X - X - -
+	1 - - - - - - - -
+	0 - - - - - - - -
+  	  0 1 2 3 4 5 6 7
+  	'''
+	def getAllMoves(self):
+		moves = []
+		'''
+		How this works: Gets Knight moves for each column of diagram above, skips
+		0 as there is nothing at 0. Uses the fact that the knight always moves 3 squares to its advantage.
+		'''
+		for i in range(-2, 3):
+			if i == 0:
+				continue
+			moves.append(Position(self.pos.x + i, self.pos.y + 3 - abs(i)))
+			moves.append(Position(self.pos.x + i, self.pos.y - 3 + abs(i)))
+		#Gets rid of any moves that are out of bounds.
+		filtered_moves = [pos for pos in moves if isPositionInBounds(pos)]
+		return filtered_moves
+
+
 
 def isPositionInBounds(position):
 	return position.x >= 0 and position.x <= 7 and position.y >= 0 and position.y <= 7
 
+
 #class Board:
 
 	#Board will contain a dictionary of Position -> Piece for both black and white. This will be useful in finding out whether or not a piece can move to a position.
-
 
