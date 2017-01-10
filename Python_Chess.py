@@ -89,7 +89,7 @@ class Knight(Piece):
 		filtered_moves = [pos for pos in moves if isPositionInBounds(pos)]
 		return filtered_moves
 
-#Class to represent a knight piece
+#Class to represent a bishop piece
 class Bishop(Piece):
 
 	def __init__(self, pos=Position(), isWhite=True):
@@ -135,10 +135,61 @@ class Bishop(Piece):
 			curr_position = Position(curr_position.x - 1, curr_position.y - 1)
 		return moves
 
+#Class to represent a rook piece
+class Rook(Piece):
 
+	def __init__(self, pos=Position(), isWhite=True):
+		super().__init__(pos, isWhite)
+
+
+	'''
+	Diagram of Rook's possible moves:
+	7 - - - - X - - -
+	6 - - - - X - - -
+	5 - - - - X - - -
+	4 X X X X R X X X
+	3 - - - - X - - -
+	2 - - - - X - - -
+	1 - - - - X - - -
+	0 - - - - X - - -
+	  0 1 2 3 4 5 6 7
+  	'''
+	def getAllMoves(self):
+		moves = []
+		'''
+		How this works: Loops through the four paterns -- Up right, up left, down right, and down left.
+		'''
+
+		curr_position = Position(self.pos.x + 1, self.pos.y)
+		while (isPositionInBounds(curr_position)):
+			moves.append(curr_position)
+			curr_position = Position(curr_position.x + 1, curr_position.y)
+
+		curr_position = Position(self.pos.x - 1, self.pos.y)
+		while (isPositionInBounds(curr_position)):
+			moves.append(curr_position)
+			curr_position = Position(curr_position.x - 1, curr_position.y)
+
+		curr_position = Position(self.pos.x, self.pos.y + 1)
+		while (isPositionInBounds(curr_position)):
+			moves.append(curr_position)
+			curr_position = Position(curr_position.x, curr_position.y + 1)
+
+		curr_position = Position(self.pos.x, self.pos.y - 1)
+		while (isPositionInBounds(curr_position)):
+			moves.append(curr_position)
+			curr_position = Position(curr_position.x, curr_position.y - 1)
+		return moves
 
 def isPositionInBounds(position):
 	return position.x >= 0 and position.x <= 7 and position.y >= 0 and position.y <= 7
+
+if __name__ == '__main__':
+	rook = Rook(Position(4, 4))
+	for move in rook.getAllMoves():
+		print(move.to_string())
+
+
 
 #class Board:
 
