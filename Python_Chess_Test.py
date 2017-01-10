@@ -108,6 +108,14 @@ class TestIsPositionInBounds(unittest.TestCase):
         pos = Position(2, 8)
         self.assertFalse(isPositionInBounds(pos))
 
+
+'''
+NOTE: From here on, each of the expected positiions will be
+tested to see if it is in the list, and then the lengths
+will be compared. This is so that we can test without order
+mattering, which will future proof these tests.
+'''
+
 class TestKnightGetAllMoves(unittest.TestCase):
 
     def test_knight_get_all_moves_from_middle(self):
@@ -124,6 +132,7 @@ class TestKnightGetAllMoves(unittest.TestCase):
         moves.append(Position(6, 3))
         for move in moves:
             self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
 
     def test_knight_get_all_moves_from_right(self):
         knight = Knight(Position(6, 4))
@@ -137,6 +146,7 @@ class TestKnightGetAllMoves(unittest.TestCase):
         moves.append(Position(4, 5))
         for move in moves:
             self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
 
     def test_knight_get_all_moves_from_top_right(self):
         knight = Knight(Position(6, 6))
@@ -148,6 +158,7 @@ class TestKnightGetAllMoves(unittest.TestCase):
         moves.append(Position(7, 4))
         for move in moves:
             self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
 
     def test_knight_get_all_moves_from_top_right_corner(self):
         knight = Knight(Position(7, 7))
@@ -157,6 +168,7 @@ class TestKnightGetAllMoves(unittest.TestCase):
         moves.append(Position(5, 6))
         for move in moves:
             self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
 
     def test_knight_get_all_moves_from_left_side(self):
         knight = Knight(Position(0, 3))
@@ -168,6 +180,7 @@ class TestKnightGetAllMoves(unittest.TestCase):
         moves.append(Position(2, 2))
         for move in moves:
             self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
 
 
     def test_knight_get_all_moves_from_bottom_side_left(self):
@@ -179,6 +192,7 @@ class TestKnightGetAllMoves(unittest.TestCase):
         moves.append(Position(2, 2))
         for move in moves:
             self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
 
     def test_knight_get_all_moves_from_bottom_side_left_2(self):
         knight = Knight(Position(2, 0))
@@ -190,8 +204,98 @@ class TestKnightGetAllMoves(unittest.TestCase):
         moves.append(Position(0, 1))
         for move in moves:
             self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
 
-        
+class TestBishiopGetAllMoves(unittest.TestCase):
+
+    def test_bishop_get_all_moves_from_middle(self):
+        bishop = Bishop(Position(4, 4))
+        expected_moves = bishop.getAllMoves()
+        moves = []
+        moves.append(Position(5, 5))
+        moves.append(Position(6, 6))
+        moves.append(Position(7, 7))
+        moves.append(Position(5, 3))
+        moves.append(Position(6, 2))
+        moves.append(Position(7, 1))
+        moves.append(Position(3, 5))
+        moves.append(Position(2, 6))
+        moves.append(Position(1, 7))
+        moves.append(Position(3, 3))
+        moves.append(Position(2, 2))
+        moves.append(Position(1, 1))
+        moves.append(Position(0, 0))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_bishop_get_all_moves_from_bottom_left(self):
+        bishop = Bishop(Position(0, 0))
+        expected_moves = bishop.getAllMoves()
+        moves = []
+        moves.append(Position(1, 1))
+        moves.append(Position(2, 2))
+        moves.append(Position(3, 3))
+        moves.append(Position(4, 4))
+        moves.append(Position(5, 5))
+        moves.append(Position(6, 6))
+        moves.append(Position(7, 7))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_bishop_get_all_moves_from_bottom_right(self):
+        bishop = Bishop(Position(7, 0))
+        expected_moves = bishop.getAllMoves()
+        moves = []
+        moves.append(Position(6, 1))
+        moves.append(Position(5, 2))
+        moves.append(Position(4, 3))
+        moves.append(Position(3, 4))
+        moves.append(Position(2, 5))
+        moves.append(Position(1, 6))
+        moves.append(Position(0, 7))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_bishop_get_all_moves_from_1_1(self):
+        bishop = Bishop(Position(1, 1))
+        expected_moves = bishop.getAllMoves()
+        moves = []
+        moves.append(Position(0, 0))
+        moves.append(Position(2, 2))
+        moves.append(Position(3, 3))
+        moves.append(Position(4, 4))
+        moves.append(Position(5, 5))
+        moves.append(Position(6, 6))
+        moves.append(Position(7, 7))
+        moves.append(Position(0, 2))
+        moves.append(Position(2, 0))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_bishop_get_all_moves_from_5_3(self):
+        bishop = Bishop(Position(5, 3))
+        expected_moves = bishop.getAllMoves()
+        moves = []
+        moves.append(Position(1, 7))
+        moves.append(Position(2, 6))
+        moves.append(Position(3, 5))
+        moves.append(Position(4, 4))
+        moves.append(Position(6, 2))
+        moves.append(Position(7, 1))
+        moves.append(Position(6, 4))
+        moves.append(Position(7, 5))
+        moves.append(Position(4, 2))
+        moves.append(Position(3, 1))
+        moves.append(Position(2, 0))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+
 
 if __name__ == '__main__':
     unittest.main()
