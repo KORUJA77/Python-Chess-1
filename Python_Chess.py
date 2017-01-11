@@ -181,12 +181,41 @@ class Rook(Piece):
 			curr_position = Position(curr_position.x, curr_position.y - 1)
 		return moves
 
+#Class to represent a Queen piece
+class Queen(Piece):
+
+	def __init__(self, pos=Position(), isWhite=True):
+		super().__init__(pos, isWhite)
+
+
+	'''
+	Diagram of Queen's possible moves:
+	7 - X - - X - - X
+	6 - - X - X - X -
+	5 - - - X X X - -
+	4 X X X X Q X X X
+	3 - - - X X X - -
+	2 - - X - X - X -
+	1 - X - - X - - X
+	0 X - - - X - - -
+	  0 1 2 3 4 5 6 7
+  	'''
+	def getAllMoves(self):
+		moves = []
+		'''
+		How this works: A queen can go any distance diagonal + vertical, so it is essentially a 
+		rook and a bishop.
+		'''
+		dummy_bishop = Bishop(Position(self.pos.x, self.pos.y))
+		dummy_rook = Rook(Position(self.pos.x, self.pos.y))
+		return dummy_bishop.getAllMoves() + dummy_rook.getAllMoves()
+
 def isPositionInBounds(position):
 	return position.x >= 0 and position.x <= 7 and position.y >= 0 and position.y <= 7
 
 if __name__ == '__main__':
-	rook = Rook(Position(4, 4))
-	for move in rook.getAllMoves():
+	queen = Queen(Position(4, 4))
+	for move in queen.getAllMoves():
 		print(move.to_string())
 
 
