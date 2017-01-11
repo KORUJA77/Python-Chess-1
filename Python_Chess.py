@@ -210,12 +210,67 @@ class Queen(Piece):
 		dummy_rook = Rook(Position(self.pos.x, self.pos.y))
 		return dummy_bishop.getAllMoves() + dummy_rook.getAllMoves()
 
+#Class to represent a King piece
+class King(Piece):
+
+	'''
+	hasMoved -- for castling -- It can only castle if it hasn't moved,
+	and there is a rook on either corner that has not moved. Any time a move
+	is made, hasMoved will be changed to true.
+	'''
+	def __init__(self, pos=Position(), isWhite=True, hasMoved=False):
+		#You can set hasMoved for testing purposes, but typically a King should
+		#be created with hasMoved being false.
+		super().__init__(pos, isWhite)
+		self.hasMoved = hasMoved
+
+	'''
+	Diagram of King's possible moves:
+	7 - - - - - - - -
+	6 - - - - - - - -
+	5 - - - X X X - -
+	4 - - - X K X - -
+	3 - - - X X X - -
+	2 - - - - - - - -
+	1 - - - - - - - -
+	0 - - - - - - - -
+	  0 1 2 3 4 5 6 7
+
+	Note: Caslte not depicted, but will be implemented.
+  	'''
+	def getAllMoves(self):
+		moves = []
+		for x in range(self.pos.x - 1, self.pos.x + 2):
+			for y in range(self.pos.y - 1, self.pos.y + 2):
+				curr_position = Position(x, y)
+				if curr_position != self.pos and isPositionInBounds(curr_position):
+					moves.append(curr_position)
+		if not self.hasMoved:
+			if self.isWhite:
+				if self.pos.x == 4 and self.pos.y == 0:
+					castle_kingside = Position(6, 0)
+					moves.append(castle_kingside)
+					castle_quenenside = Position(2, 0)
+					moves.append(castle_quenenside)
+			else:
+				if self.pos.x == 4 and self.pos.y == 7:
+					castle_kingside = Position(6, 7)
+					moves.append(castle_kingside)
+					castle_quenenside = Position(2, 7)
+					moves.append(castle_quenenside)
+		return moves
+
+
+
+
+
+
 def isPositionInBounds(position):
 	return position.x >= 0 and position.x <= 7 and position.y >= 0 and position.y <= 7
 
 if __name__ == '__main__':
-	queen = Queen(Position(4, 4))
-	for move in queen.getAllMoves():
+	king = King(Position(4, 4), True, True)
+	for move in king.getAllMoves():
 		print(move.to_string())
 
 
