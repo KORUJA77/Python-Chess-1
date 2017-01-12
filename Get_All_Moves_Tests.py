@@ -565,5 +565,64 @@ class TestQueenGetAllMoves(unittest.TestCase):
         for move in moves:
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
+
+class TestKingGetAllMoves(unittest.TestCase):
+
+    def test_king_get_all_moves_e_1_can_castle(self):
+        king = King(Position(4, 0))
+        expected_moves = king.getAllMoves()
+        moves = []
+        moves.append(Position(2, 0))
+        moves.append(Position(3, 0))
+        moves.append(Position(5, 0))
+        moves.append(Position(6, 0))
+        moves.append(Position(3, 1))
+        moves.append(Position(4, 1))
+        moves.append(Position(5, 1))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_king_get_all_moves_e_1_cannot_castle(self):
+        king = King(Position(4, 0), True, True)
+        expected_moves = king.getAllMoves()
+        moves = []
+        moves.append(Position(3, 0))
+        moves.append(Position(5, 0))
+        moves.append(Position(3, 1))
+        moves.append(Position(4, 1))
+        moves.append(Position(5, 1))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_king_get_all_moves_e_8_can_castle(self):
+        king = King(Position(4, 7), False)
+        expected_moves = king.getAllMoves()
+        moves = []
+        moves.append(Position(2, 7))
+        moves.append(Position(3, 7))
+        moves.append(Position(5, 7))
+        moves.append(Position(6, 7))
+        moves.append(Position(3, 6))
+        moves.append(Position(4, 6))
+        moves.append(Position(5, 6))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_king_get_all_moves_e_8_cannot_castle(self):
+        king = King(Position(4, 7), False, True)
+        expected_moves = king.getAllMoves()
+        moves = []
+        moves.append(Position(3, 7))
+        moves.append(Position(5, 7))
+        moves.append(Position(3, 6))
+        moves.append(Position(4, 6))
+        moves.append(Position(5, 6))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
 if __name__ == '__main__':
     unittest.main()
