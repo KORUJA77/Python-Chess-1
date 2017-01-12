@@ -11,10 +11,27 @@ Piece Subclasses (Pawn, Knight, Bishop, Rook, Queen, King):
 		Gets all the possible moves of the given piece, given its position.
 		Returns a list of Position, where the piece could move to.
 
-	getLegalMoves(self, white_pieces, black_pieces)
+	getLegalMovesExcludingCheck(self, white_pieces, black_pieces)
+		Gets a list of all legal moves for a pieces given the current pieces
+		on the board, but does not include check. For example, in the following position
+		(Upper case - White Piece, Lower case - Black Piece):
+		7 - - - - - - - -
+		6 - - - - - b - -
+		5 - - - - P - - -
+		4 - - - K - - - -
+		3 - - - - - - - -
+		2 - - - - - - - -
+		1 - - - - - - - -
+		0 - - - - - - - -
+		  0 1 2 3 4 5 6 7
+		The method would return [(4, 6), (5, 6)] for the white pawn.
+		This will include everything else. For example, en passant and castling
+		will be implemented.
+
+	getLegalMoves(self, white_pieces, black_pieces, black_king, white_king)
 		Gets all the legal moves for a piece, given the current pieces on
-		the board. For example, if a piece is in front of a pawn, it will
-		not be included in the legal moves. Returns a list of positions that are legal moves.
+		the board. For example, if a piece is in front of a pawn, its position will
+		not be included in the legal moves for that pawn. Returns a list of positions that are legal moves.
 
 Pawn:
 	May need special behaviors for en passant and pawn advancement to final rank. This may be within the board, or within the pawn. Undecided.
