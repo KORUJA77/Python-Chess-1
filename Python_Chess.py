@@ -29,8 +29,10 @@ class Piece:
 #Class pawn is a piece, inherits from it so that it can use its pos and isWhite.
 class Pawn(Piece):
 
-	def __init__(self, pos=Position(), isWhite=True):
+	#enPassant in constructor for testing purposes.
+	def __init__(self, pos=Position(), isWhite=True, enPassant=False):
 		super().__init__(pos, isWhite)
+		self.enPassant = enPassant
 
 	#Gets all the possible moves of a pawn based on its current position
 	def getAllMoves(self):
@@ -54,6 +56,32 @@ class Pawn(Piece):
 			takeRight = Position(self.pos.x + 1, self.pos.y + y_factor)
 			moves.append(takeRight)
 		return moves
+
+	#Gets all of the legal moves for a pawn based on its current position and the board, excluding
+	#check.
+	def getLegalMovesExcludingCheck(self, white_pieces, black_pieces):
+		moves = []
+		y_factor = 1
+		if not self.isWhite:
+			y_factor = -1
+		#Checking for whether pawn is on left side of board
+		if(self.pos.x > 0):
+			if self.isWhite and (black_pieces.get(Position(self.pos.x - 1, self.pos.y + y_factor), -1) != -1
+			takeLeft = Position(self.pos.x - 1, self.pos.y + y_factor)
+			moves.append(takeLeft)
+		#Straight forwards
+		forwards = Position(self.pos.x, self.pos.y + y_factor)
+		moves.append(forwards)
+		#Move forwards 2
+		if((self.pos.y == 1 and self.isWhite) or (self.pos.y == 6 and (not self.isWhite))):
+			forwards_two = Position(self.pos.x, self.pos.y + (y_factor * 2))
+			moves.append(forwards_two)
+		#Checking whether pawn is on right side of board
+		if(self.pos.x < 7):
+			takeRight = Position(self.pos.x + 1, self.pos.y + y_factor)
+			moves.append(takeRight)
+		return moves
+
 
 #Class to represent a knight piece
 class Knight(Piece):
