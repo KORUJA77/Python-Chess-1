@@ -624,5 +624,46 @@ class TestKingGetAllMoves(unittest.TestCase):
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
 
+    def test_king_get_all_moves_4_4(self):
+        king = King(Position(4, 4))
+        expected_moves = king.getAllMoves()
+        moves = []
+        moves.append(Position(3, 3))
+        moves.append(Position(4, 3))
+        moves.append(Position(5, 3))
+        moves.append(Position(3, 4))
+        moves.append(Position(5, 4))
+        moves.append(Position(3, 5))
+        moves.append(Position(4, 5))
+        moves.append(Position(5, 5))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_king_get_all_moves_0_7(self):
+        king = King(Position(0, 7))
+        expected_moves = king.getAllMoves()
+        moves = []
+        moves.append(Position(0, 6))
+        moves.append(Position(1, 6))
+        moves.append(Position(1, 7))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_king_get_all_moves_7_5(self):
+        king = King(Position(7, 5))
+        expected_moves = king.getAllMoves()
+        moves = []
+        moves.append(Position(7, 4))
+        moves.append(Position(7, 6))
+        moves.append(Position(6, 4))
+        moves.append(Position(6, 5))
+        moves.append(Position(6, 6))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+
 if __name__ == '__main__':
     unittest.main()
