@@ -14,6 +14,11 @@ class Position:
 	def __eq__(self, other):
 		return self.__dict__ == other.__dict__
 
+	def __key(self):
+		return (self.x, self.y)
+
+	def __hash__(self):
+		return hash(self.__key())
 
 class Piece:
 
@@ -25,6 +30,9 @@ class Piece:
 
 	def to_string(self):
 		return "Position: {0}, White: {1}".format(self.pos.to_string(), self.isWhite)
+	#Tests whether this piece can taken via en passant
+	def canBeEnPassant(self):
+		return False
 
 #Class pawn is a piece, inherits from it so that it can use its pos and isWhite.
 class Pawn(Piece):
@@ -33,6 +41,9 @@ class Pawn(Piece):
 	def __init__(self, pos=Position(), isWhite=True, enPassant=False):
 		super().__init__(pos, isWhite)
 		self.enPassant = enPassant
+
+	def canBeEnPassant(self):
+		return self.enPassant
 
 	#Gets all the possible moves of a pawn based on its current position
 	def getAllMoves(self):
@@ -59,27 +70,58 @@ class Pawn(Piece):
 
 	#Gets all of the legal moves for a pawn based on its current position and the board, excluding
 	#check.
+	
 	def getLegalMovesExcludingCheck(self, white_pieces, black_pieces):
 		moves = []
 		y_factor = 1
 		if not self.isWhite:
 			y_factor = -1
 		#Checking for whether pawn is on left side of board
-		if(self.pos.x > 0):
-			if self.isWhite and (black_pieces.get(Position(self.pos.x - 1, self.pos.y + y_factor), -1) != -1
-			takeLeft = Position(self.pos.x - 1, self.pos.y + y_factor)
-			moves.append(takeLeft)
+		if self.pos.x > 0:
+			if self.isWhite and (Position(self.pos.x - 1, self.pos.y + 1) in black_pieces):
+				takeLeft = Position(self.pos.x - 1, self.pos.y + 1)
+				moves.append(takeLeft)
+			elif (not self.isWhite) and (Position(self.pos.x - 1, self.pos.y - 1) in white_pieces):
+				takeLeft = Position(self.pos.x - 1, self.pos.y - 1)
+				moves.append(takeLeft)
+			#En passant left
+			elif self.isWhite and (Position(self.pos.x - 1, self.pos.y) in black_pieces):
+				if black_pieces[Position(self.pos.x - 1, self.pos.y)].canBeEnPassant():
+					takeLeft = Position(self.pos.x - 1, self.pos.y + 1)
+					moves.append(takeLeft)
+			elif (not self.isWhite) and (Position(self.pos.x - 1, self.pos.y) in white_pieces):
+				if white_pieces[Position(self.pos.x - 1, self.pos.y)].canBeEnPassant():
+					takeLeft = Position(self.pos.x - 1, self.pos.y - 1)
+					moves.append(takeLeft)
+
 		#Straight forwards
 		forwards = Position(self.pos.x, self.pos.y + y_factor)
-		moves.append(forwards)
+		if not(forwards in black_pieces or forwards in white_pieces):
+			moves.append(forwards)
+		
 		#Move forwards 2
+		forwards_two = Position(self.pos.x, self.pos.y + (y_factor * 2))
 		if((self.pos.y == 1 and self.isWhite) or (self.pos.y == 6 and (not self.isWhite))):
 			forwards_two = Position(self.pos.x, self.pos.y + (y_factor * 2))
-			moves.append(forwards_two)
+			if not(forwards_two in black_pieces or forwards_two in white_pieces):
+				moves.append(forwards_two)
 		#Checking whether pawn is on right side of board
 		if(self.pos.x < 7):
-			takeRight = Position(self.pos.x + 1, self.pos.y + y_factor)
-			moves.append(takeRight)
+			if self.isWhite and (Position(self.pos.x + 1, self.pos.y + 1) in black_pieces):
+				takeRight = Position(self.pos.x + 1, self.pos.y + 1)
+				moves.append(takeRight)
+			elif (not self.isWhite) and (Position(self.pos.x + 1, self.pos.y - 1) in white_pieces):
+				takeRight = Position(self.pos.x + 1, self.pos.y - 1)
+				moves.append(takeRight)
+			#En passant left
+			elif self.isWhite and (Position(self.pos.x + 1, self.pos.y) in black_pieces):
+				if black_pieces[Position(self.pos.x + 1, self.pos.y)].canBeEnPassant():
+					takeRight = Position(self.pos.x + 1, self.pos.y + 1)
+					moves.append(takeRight)
+			elif (not self.isWhite) and (Position(self.pos.x + 1, self.pos.y) in white_pieces):
+				if white_pieces[Position(self.pos.x + 1, self.pos.y)].canBeEnPassant():
+					takeRight = Position(self.pos.x + 1, self.pos.y - 1)
+					moves.append(takeRight)
 		return moves
 
 
@@ -296,9 +338,10 @@ class King(Piece):
 def isPositionInBounds(position):
 	return position.x >= 0 and position.x <= 7 and position.y >= 0 and position.y <= 7
 
+
 if __name__ == '__main__':
-	king = King(Position(4, 4), True, True)
-	for move in king.getAllMoves():
+	pawn = Pawn(Position(4, 4))
+	for move in pawn.getLegalMovesExcludingCheck([], {Position(3, 4): Pawn(Position(3, 4), False, True)}):
 		print(move.to_string())
 
 
