@@ -85,11 +85,11 @@ class Pawn(Piece):
 				takeLeft = Position(self.pos.x - 1, self.pos.y - 1)
 				moves.append(takeLeft)
 			#En passant left
-			elif self.isWhite and (Position(self.pos.x - 1, self.pos.y) in black_pieces):
+			elif self.isWhite and self.pos.y == 4 and (Position(self.pos.x - 1, self.pos.y) in black_pieces):
 				if black_pieces[Position(self.pos.x - 1, self.pos.y)].canBeEnPassant():
 					takeLeft = Position(self.pos.x - 1, self.pos.y + 1)
 					moves.append(takeLeft)
-			elif (not self.isWhite) and (Position(self.pos.x - 1, self.pos.y) in white_pieces):
+			elif (not self.isWhite) and self.pos.y == 3 and (Position(self.pos.x - 1, self.pos.y) in white_pieces):
 				if white_pieces[Position(self.pos.x - 1, self.pos.y)].canBeEnPassant():
 					takeLeft = Position(self.pos.x - 1, self.pos.y - 1)
 					moves.append(takeLeft)
@@ -114,11 +114,11 @@ class Pawn(Piece):
 				takeRight = Position(self.pos.x + 1, self.pos.y - 1)
 				moves.append(takeRight)
 			#En passant left
-			elif self.isWhite and (Position(self.pos.x + 1, self.pos.y) in black_pieces):
+			elif self.isWhite and self.pos.y == 4 and (Position(self.pos.x + 1, self.pos.y) in black_pieces):
 				if black_pieces[Position(self.pos.x + 1, self.pos.y)].canBeEnPassant():
 					takeRight = Position(self.pos.x + 1, self.pos.y + 1)
 					moves.append(takeRight)
-			elif (not self.isWhite) and (Position(self.pos.x + 1, self.pos.y) in white_pieces):
+			elif (not self.isWhite) and self.pos.y == 3 and (Position(self.pos.x + 1, self.pos.y) in white_pieces):
 				if white_pieces[Position(self.pos.x + 1, self.pos.y)].canBeEnPassant():
 					takeRight = Position(self.pos.x + 1, self.pos.y - 1)
 					moves.append(takeRight)
