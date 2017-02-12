@@ -340,8 +340,11 @@ def isPositionInBounds(position):
 
 
 if __name__ == '__main__':
-	pawn = Pawn(Position(4, 4))
-	for move in pawn.getLegalMovesExcludingCheck([], {Position(3, 4): Pawn(Position(3, 4), False, True)}):
+	pawn = Pawn(Position(4, 3), False)
+	white_pieces = {Position(5, 3): Pawn(Position(5, 3), True, True)}
+	black_pieces = {}
+	moves = pawn.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+	for move in moves:
 		print(move.to_string())
 
 

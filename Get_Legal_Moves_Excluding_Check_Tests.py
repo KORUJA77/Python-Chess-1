@@ -128,7 +128,7 @@ class TestPawnGetLegalMovesExcludingCheck(unittest.TestCase):
 		self.assertEqual(len(expected_moves), len(moves))
 
 	def test_en_passant_left_black(self):
-		pawn = Pawn(Position(4, 3))
+		pawn = Pawn(Position(4, 3), False)
 		white_pieces = {Position(5, 3): Pawn(Position(5, 3), True, True)}
 		black_pieces = {}
 		moves = pawn.getLegalMovesExcludingCheck(white_pieces, black_pieces)
@@ -141,7 +141,7 @@ class TestPawnGetLegalMovesExcludingCheck(unittest.TestCase):
 		self.assertEqual(len(expected_moves), len(moves))
 
 	def test_en_passant_right_black(self):
-		pawn = Pawn(Position(4, 3))
+		pawn = Pawn(Position(4, 3), False)
 		white_pieces = {Position(3, 3): Pawn(Position(3, 3), True, True)}
 		black_pieces = {}
 		moves = pawn.getLegalMovesExcludingCheck(white_pieces, black_pieces)
@@ -153,7 +153,7 @@ class TestPawnGetLegalMovesExcludingCheck(unittest.TestCase):
 		self.assertEqual(len(expected_moves), len(moves))
 
 	def test_take_both_black(self):
-		pawn = Pawn(Position(4, 4))
+		pawn = Pawn(Position(4, 4), False)
 		white_pieces = {Position(3, 3): Pawn(Position(3, 3)),
 		Position(5, 3): Pawn(Position(5, 3))}
 		black_pieces = {}
@@ -167,13 +167,13 @@ class TestPawnGetLegalMovesExcludingCheck(unittest.TestCase):
 		self.assertEqual(len(expected_moves), len(moves))
 
 	def test_move_two_black(self):
-		pawn = Pawn(Position(3, 7))
-		white_pieces = {Position(3, 5): Pawn(Position(3, 5)),
+		pawn = Pawn(Position(3, 6), False)
+		white_pieces = {Position(3, 2): Pawn(Position(3, 2)),
 		Position(5, 5): Rook(Position(5, 5))}
 		black_pieces = {}
 		moves = pawn.getLegalMovesExcludingCheck(white_pieces, black_pieces)
 		expected_moves = []
-		expected_moves.append(Position(3, 6))
+		expected_moves.append(Position(3, 4))
 		expected_moves.append(Position(3, 5))
 		for move in moves:
 			self.assertTrue(move in expected_moves)
