@@ -9,9 +9,9 @@ from Python_Chess import *
 ---------------------------------------------------------
 
 '''
-class TestPawnMethods(unittest.TestCase):
+class TestPawnGetAllMoves(unittest.TestCase):
 
-    def test_pawn_get_possible_moves_white_no_left(self):
+    def test_pawn_get_all_moves_white_no_left(self):
     	pawn = Pawn()
     	moves = pawn.getAllMoves()
     	expected_moves = []
@@ -19,7 +19,7 @@ class TestPawnMethods(unittest.TestCase):
     	expected_moves.append(Position(1, 1))
     	self.assertListEqual(moves, expected_moves)
 
-    def test_pawn_get_possible_moves_white_no_right(self):
+    def test_pawn_get_all_moves_white_no_right(self):
     	pawn = Pawn(Position(7, 2))
     	moves = pawn.getAllMoves()
     	expected_moves = []
@@ -27,7 +27,7 @@ class TestPawnMethods(unittest.TestCase):
     	expected_moves.append(Position(7, 3))
     	self.assertListEqual(moves, expected_moves)
 
-    def test_pawn_get_possible_moves_white_no_double(self):
+    def test_pawn_get_all_moves_white_no_double(self):
     	pawn = Pawn(Position(5, 4))
     	moves = pawn.getAllMoves()
     	expected_moves = []
@@ -36,7 +36,7 @@ class TestPawnMethods(unittest.TestCase):
     	expected_moves.append(Position(6, 5))
     	self.assertListEqual(moves, expected_moves)
 
-    def test_pawn_get_possible_moves_white_double(self):
+    def test_pawn_get_all_moves_white_double(self):
     	pawn = Pawn(Position(3, 1))
     	moves = pawn.getAllMoves()
     	expected_moves = []
@@ -46,7 +46,7 @@ class TestPawnMethods(unittest.TestCase):
     	expected_moves.append(Position(4, 2))
     	self.assertListEqual(moves, expected_moves)
 
-    def test_pawn_get_possible_moves_black_double(self):
+    def test_pawn_get_all_moves_black_double(self):
     	pawn = Pawn(Position(6, 6), False)
     	moves = pawn.getAllMoves()
     	expected_moves = []
@@ -56,7 +56,7 @@ class TestPawnMethods(unittest.TestCase):
     	expected_moves.append(Position(7, 5))
     	self.assertListEqual(moves, expected_moves)
 
-    def test_pawn_get_possible_moves_black_no_double(self):
+    def test_pawn_get_all_moves_black_no_double(self):
     	pawn = Pawn(Position(6, 5), False)
     	moves = pawn.getAllMoves()
     	expected_moves = []
@@ -65,7 +65,7 @@ class TestPawnMethods(unittest.TestCase):
     	expected_moves.append(Position(7, 4))
     	self.assertListEqual(moves, expected_moves)
 
-    def test_pawn_get_possible_moves_black_double_no_left(self):
+    def test_pawn_get_all_moves_black_double_no_left(self):
     	pawn = Pawn(Position(0, 6), False)
     	moves = pawn.getAllMoves()
     	expected_moves = []
