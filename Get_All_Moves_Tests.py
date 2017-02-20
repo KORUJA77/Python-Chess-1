@@ -1,5 +1,6 @@
 import unittest
 from Python_Chess import *
+
 '''
 
 ---------------------------------------------------------
@@ -9,73 +10,74 @@ from Python_Chess import *
 ---------------------------------------------------------
 
 '''
-class TestPawnGetAllMoves(unittest.TestCase):
 
+
+class TestPawnGetAllMoves(unittest.TestCase):
     def test_pawn_get_all_moves_white_no_left(self):
-    	pawn = Pawn()
-    	moves = pawn.getAllMoves()
-    	expected_moves = []
-    	expected_moves.append(Position(0, 1))
-    	expected_moves.append(Position(1, 1))
-    	self.assertListEqual(moves, expected_moves)
+        pawn = Pawn()
+        moves = pawn.getAllMoves()
+        expected_moves = []
+        expected_moves.append(Position(0, 1))
+        expected_moves.append(Position(1, 1))
+        self.assertListEqual(moves, expected_moves)
 
     def test_pawn_get_all_moves_white_no_right(self):
-    	pawn = Pawn(Position(7, 2))
-    	moves = pawn.getAllMoves()
-    	expected_moves = []
-    	expected_moves.append(Position(6, 3))
-    	expected_moves.append(Position(7, 3))
-    	self.assertListEqual(moves, expected_moves)
+        pawn = Pawn(Position(7, 2))
+        moves = pawn.getAllMoves()
+        expected_moves = []
+        expected_moves.append(Position(6, 3))
+        expected_moves.append(Position(7, 3))
+        self.assertListEqual(moves, expected_moves)
 
     def test_pawn_get_all_moves_white_no_double(self):
-    	pawn = Pawn(Position(5, 4))
-    	moves = pawn.getAllMoves()
-    	expected_moves = []
-    	expected_moves.append(Position(4, 5))
-    	expected_moves.append(Position(5, 5))
-    	expected_moves.append(Position(6, 5))
-    	self.assertListEqual(moves, expected_moves)
+        pawn = Pawn(Position(5, 4))
+        moves = pawn.getAllMoves()
+        expected_moves = []
+        expected_moves.append(Position(4, 5))
+        expected_moves.append(Position(5, 5))
+        expected_moves.append(Position(6, 5))
+        self.assertListEqual(moves, expected_moves)
 
     def test_pawn_get_all_moves_white_double(self):
-    	pawn = Pawn(Position(3, 1))
-    	moves = pawn.getAllMoves()
-    	expected_moves = []
-    	expected_moves.append(Position(2, 2))
-    	expected_moves.append(Position(3, 2))
-    	expected_moves.append(Position(3, 3))
-    	expected_moves.append(Position(4, 2))
-    	self.assertListEqual(moves, expected_moves)
+        pawn = Pawn(Position(3, 1))
+        moves = pawn.getAllMoves()
+        expected_moves = []
+        expected_moves.append(Position(2, 2))
+        expected_moves.append(Position(3, 2))
+        expected_moves.append(Position(3, 3))
+        expected_moves.append(Position(4, 2))
+        self.assertListEqual(moves, expected_moves)
 
     def test_pawn_get_all_moves_black_double(self):
-    	pawn = Pawn(Position(6, 6), False)
-    	moves = pawn.getAllMoves()
-    	expected_moves = []
-    	expected_moves.append(Position(5, 5))
-    	expected_moves.append(Position(6, 5))
-    	expected_moves.append(Position(6, 4))
-    	expected_moves.append(Position(7, 5))
-    	self.assertListEqual(moves, expected_moves)
+        pawn = Pawn(Position(6, 6), False)
+        moves = pawn.getAllMoves()
+        expected_moves = []
+        expected_moves.append(Position(5, 5))
+        expected_moves.append(Position(6, 5))
+        expected_moves.append(Position(6, 4))
+        expected_moves.append(Position(7, 5))
+        self.assertListEqual(moves, expected_moves)
 
     def test_pawn_get_all_moves_black_no_double(self):
-    	pawn = Pawn(Position(6, 5), False)
-    	moves = pawn.getAllMoves()
-    	expected_moves = []
-    	expected_moves.append(Position(5, 4))
-    	expected_moves.append(Position(6, 4))
-    	expected_moves.append(Position(7, 4))
-    	self.assertListEqual(moves, expected_moves)
+        pawn = Pawn(Position(6, 5), False)
+        moves = pawn.getAllMoves()
+        expected_moves = []
+        expected_moves.append(Position(5, 4))
+        expected_moves.append(Position(6, 4))
+        expected_moves.append(Position(7, 4))
+        self.assertListEqual(moves, expected_moves)
 
     def test_pawn_get_all_moves_black_double_no_left(self):
-    	pawn = Pawn(Position(0, 6), False)
-    	moves = pawn.getAllMoves()
-    	expected_moves = []
-    	expected_moves.append(Position(0, 5))
-    	expected_moves.append(Position(0, 4))
-    	expected_moves.append(Position(1, 5))
-    	self.assertListEqual(moves, expected_moves)
+        pawn = Pawn(Position(0, 6), False)
+        moves = pawn.getAllMoves()
+        expected_moves = []
+        expected_moves.append(Position(0, 5))
+        expected_moves.append(Position(0, 4))
+        expected_moves.append(Position(1, 5))
+        self.assertListEqual(moves, expected_moves)
+
 
 class TestIsPositionInBounds(unittest.TestCase):
-
     def test_is_origin_in_bounds(self):
         posOrigin = Position(0, 0)
         self.assertTrue(isPositionInBounds(posOrigin))
@@ -116,8 +118,8 @@ will be compared. This is so that we can test without order
 mattering, which will future proof these tests.
 '''
 
-class TestKnightGetAllMoves(unittest.TestCase):
 
+class TestKnightGetAllMoves(unittest.TestCase):
     def test_knight_get_all_moves_from_middle(self):
         knight = Knight(Position(4, 4))
         expected_moves = knight.getAllMoves()
@@ -182,7 +184,6 @@ class TestKnightGetAllMoves(unittest.TestCase):
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
 
-
     def test_knight_get_all_moves_from_bottom_side_left(self):
         knight = Knight(Position(1, 0))
         expected_moves = knight.getAllMoves()
@@ -206,8 +207,8 @@ class TestKnightGetAllMoves(unittest.TestCase):
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
 
-class TestBishiopGetAllMoves(unittest.TestCase):
 
+class TestBishopGetAllMoves(unittest.TestCase):
     def test_bishop_get_all_moves_from_middle(self):
         bishop = Bishop(Position(4, 4))
         expected_moves = bishop.getAllMoves()
@@ -295,8 +296,8 @@ class TestBishiopGetAllMoves(unittest.TestCase):
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
 
-class TestRookGetAllMoves(unittest.TestCase):
 
+class TestRookGetAllMoves(unittest.TestCase):
     def test_rook_get_all_moves_from_middle(self):
         rook = Rook(Position(4, 4))
         expected_moves = rook.getAllMoves()
@@ -340,7 +341,7 @@ class TestRookGetAllMoves(unittest.TestCase):
         for move in moves:
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
-        
+
     def test_rook_get_all_moves_from_bottom_right(self):
         rook = Rook(Position(7, 0))
         expected_moves = rook.getAllMoves()
@@ -362,7 +363,7 @@ class TestRookGetAllMoves(unittest.TestCase):
         for move in moves:
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
-        
+
     def test_rook_get_all_moves_from_1_1(self):
         rook = Rook(Position(1, 1))
         expected_moves = rook.getAllMoves()
@@ -384,7 +385,7 @@ class TestRookGetAllMoves(unittest.TestCase):
         for move in moves:
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
-        
+
     def test_rook_get_all_moves_from_5_3(self):
         rook = Rook(Position(5, 3))
         expected_moves = rook.getAllMoves()
@@ -407,8 +408,8 @@ class TestRookGetAllMoves(unittest.TestCase):
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
 
-class TestQueenGetAllMoves(unittest.TestCase):
 
+class TestQueenGetAllMoves(unittest.TestCase):
     def test_queen_get_all_moves_from_middle(self):
         queen = Queen(Position(4, 4))
         expected_moves = queen.getAllMoves()
@@ -472,7 +473,7 @@ class TestQueenGetAllMoves(unittest.TestCase):
         for move in moves:
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
-        
+
     def test_queen_get_all_moves_from_bottom_right(self):
         queen = Queen(Position(7, 0))
         expected_moves = queen.getAllMoves()
@@ -501,7 +502,7 @@ class TestQueenGetAllMoves(unittest.TestCase):
         for move in moves:
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
-        
+
     def test_queen_get_all_moves_from_1_1(self):
         queen = Queen(Position(1, 1))
         expected_moves = queen.getAllMoves()
@@ -532,7 +533,7 @@ class TestQueenGetAllMoves(unittest.TestCase):
         for move in moves:
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
-        
+
     def test_queen_get_all_moves_from_5_3(self):
         queen = Queen(Position(5, 3))
         expected_moves = queen.getAllMoves()
@@ -566,8 +567,8 @@ class TestQueenGetAllMoves(unittest.TestCase):
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
 
-class TestKingGetAllMoves(unittest.TestCase):
 
+class TestKingGetAllMoves(unittest.TestCase):
     def test_king_get_all_moves_e_1_can_castle(self):
         king = King(Position(4, 0))
         expected_moves = king.getAllMoves()
