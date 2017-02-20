@@ -129,39 +129,58 @@ class Pawn(Piece):
 
 # Class to represent a knight piece
 class Knight(Piece):
-    def __init__(self, pos=Position(), isWhite=True):
-        super().__init__(pos, isWhite)
 
-    '''
-    Diagram of Knight's possible moves:
-    7 - - - - - - - -
-    6 - - - X - X - -
-    5 - - X - - - X -
-    4 - - - - N - - -
-    3 - - X - - - X -
-    2 - - - X - X - -
-    1 - - - - - - - -
-    0 - - - - - - - -
-        0 1 2 3 4 5 6 7
-      '''
-
-    def getAllMoves(self):
-        moves = []
-        '''
-        How this works: Gets Knight moves for each column of diagram above, skips
-        0 as there is nothing at 0. Uses the fact that the knight always moves 3 squares to its advantage.
-        '''
-        for i in range(-2, 3):
-            if i == 0:
-                continue
-            moves.append(Position(self.pos.x + i, self.pos.y + 3 - abs(i)))
-            moves.append(Position(self.pos.x + i, self.pos.y - 3 + abs(i)))
-        # Gets rid of any moves that are out of bounds.
-        filtered_moves = [pos for pos in moves if isPositionInBounds(pos)]
-        return filtered_moves
+	def __init__(self, pos=Position(), isWhite=True):
+		super().__init__(pos, isWhite)
 
 
-# Class to represent a bishop piece
+	'''
+	Diagram of Knight's possible moves:
+	7 - - - - - - - -
+	6 - - - X - X - -
+	5 - - X - - - X -
+	4 - - - - N - - -
+	3 - - X - - - X -
+	2 - - - X - X - -
+	1 - - - - - - - -
+	0 - - - - - - - -
+  	  0 1 2 3 4 5 6 7
+  	'''
+	def getAllMoves(self):
+		moves = []
+		'''
+		How this works: Gets Knight moves for each column of diagram above, skips
+		0 as there is nothing at 0. Uses the fact that the knight always moves 3 squares to its advantage.
+		'''
+		for i in range(-2, 3):
+			if i == 0:
+				continue
+			moves.append(Position(self.pos.x + i, self.pos.y + 3 - abs(i)))
+			moves.append(Position(self.pos.x + i, self.pos.y - 3 + abs(i)))
+		#Gets rid of any moves that are out of bounds.
+		filtered_moves = [pos for pos in moves if isPositionInBounds(pos)]
+		return filtered_moves
+
+	def getLegalMovesExcludingCheck(self, white_pieces, black_pieces):
+		moves = []
+		'''
+		How this works: Gets Knight moves for each column of diagram above, skips
+		0 as there is nothing at 0. Uses the fact that the knight always moves 3 squares to its advantage.
+		'''
+		for i in range(-2, 3):
+			if i == 0:
+				continue
+			moves.append(Position(self.pos.x + i, self.pos.y + 3 - abs(i)))
+			moves.append(Position(self.pos.x + i, self.pos.y - 3 + abs(i)))
+		#Gets rid of any moves that are out of bounds.
+		filtered_moves = False
+		if self.isWhite:
+			filtered_moves = [pos for pos in moves if isPositionInBounds(pos) and pos not in white_pieces]
+		else:
+			filtered_moves = [pos for pos in moves if isPositionInBounds(pos) and pos not in black_pieces]
+		return filtered_moves
+
+#Class to represent a bishop piece
 class Bishop(Piece):
     def __init__(self, pos=Position(), isWhite=True):
         super().__init__(pos, isWhite)
@@ -380,12 +399,7 @@ def isPositionInBounds(position):
 
 
 if __name__ == '__main__':
-    bishop = Bishop(Position(0, 0))
-    white_pieces = {}
-    black_pieces = {Position(4, 4): Pawn(Position(4, 4), False)}
-    moves = bishop.getLegalMovesExcludingCheck(white_pieces, black_pieces)
-    for move in moves:
-        print(move.to_string())
+    print("")
 
 
 
