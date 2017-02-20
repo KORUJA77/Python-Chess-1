@@ -384,3 +384,67 @@ class TestBishopGetLegalMovesExcludingCheck(unittest.TestCase):
         for move in moves:
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
+
+class TestKnightGetLegalMovesExcludingCheck(unittest.TestCase):
+
+    def test_0_0_empty_board(self):
+        knight = Knight(Position(0, 0))
+        white_pieces = {Position(0, 0), knight}
+        black_pieces = {}
+        moves = knight.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        expected_moves = []
+        expected_moves.append(Position(1, 2))
+        expected_moves.append(Position(2, 1))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_0_0_take_both(self):
+        knight = Knight(Position(0, 0))
+        white_pieces = {Position(0, 0), knight}
+        black_pieces = {Position(1, 2), Pawn(Position(1, 2), False),
+                        Position(2, 1), Pawn(Position(2, 1), False)}
+        moves = knight.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        expected_moves = []
+        expected_moves.append(Position(1, 2))
+        expected_moves.append(Position(2, 1))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_0_0_block_both(self):
+        knight = Knight(Position(0, 0))
+        white_pieces = {Position(0, 0), knight,
+                        Position(1, 2), Pawn(Position(1, 2)),
+                        Position(2, 1), Pawn(Position(2, 1))}
+        black_pieces = {}
+        moves = knight.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        expected_moves = []
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_0_0_take_both_black(self):
+        knight = Knight(Position(0, 0), False)
+        black_pieces = {Position(0, 0), knight}
+        white_pieces = {Position(1, 2), Pawn(Position(1, 2)),
+                        Position(2, 1), Pawn(Position(2, 1))}
+        moves = knight.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        expected_moves = []
+        expected_moves.append(Position(1, 2))
+        expected_moves.append(Position(2, 1))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_0_0_block_both_black(self):
+        knight = Knight(Position(0, 0), False)
+        black_pieces = {Position(0, 0), knight,
+                        Position(1, 2), Pawn(Position(1, 2), False),
+                        Position(2, 1), Pawn(Position(2, 1), False)}
+        white_pieces = {}
+        moves = knight.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        expected_moves = []
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
