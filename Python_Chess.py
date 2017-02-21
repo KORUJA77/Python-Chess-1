@@ -129,58 +129,58 @@ class Pawn(Piece):
 
 # Class to represent a knight piece
 class Knight(Piece):
+    def __init__(self, pos=Position(), isWhite=True):
+        super().__init__(pos, isWhite)
 
-	def __init__(self, pos=Position(), isWhite=True):
-		super().__init__(pos, isWhite)
+    '''
+    Diagram of Knight's possible moves:
+    7 - - - - - - - -
+    6 - - - X - X - -
+    5 - - X - - - X -
+    4 - - - - N - - -
+    3 - - X - - - X -
+    2 - - - X - X - -
+    1 - - - - - - - -
+    0 - - - - - - - -
+        0 1 2 3 4 5 6 7
+      '''
+
+    def getAllMoves(self):
+        moves = []
+        '''
+        How this works: Gets Knight moves for each column of diagram above, skips
+        0 as there is nothing at 0. Uses the fact that the knight always moves 3 squares to its advantage.
+        '''
+        for i in range(-2, 3):
+            if i == 0:
+                continue
+            moves.append(Position(self.pos.x + i, self.pos.y + 3 - abs(i)))
+            moves.append(Position(self.pos.x + i, self.pos.y - 3 + abs(i)))
+            # Gets rid of any moves that are out of bounds.
+        filtered_moves = [pos for pos in moves if isPositionInBounds(pos)]
+        return filtered_moves
+
+    def getLegalMovesExcludingCheck(self, white_pieces, black_pieces):
+        moves = []
+        '''
+        How this works: Gets Knight moves for each column of diagram above, skips
+        0 as there is nothing at 0. Uses the fact that the knight always moves 3 squares to its advantage.
+        '''
+        for i in range(-2, 3):
+            if i == 0:
+                continue
+            moves.append(Position(self.pos.x + i, self.pos.y + 3 - abs(i)))
+            moves.append(Position(self.pos.x + i, self.pos.y - 3 + abs(i)))
+            # Gets rid of any moves that are out of bounds.
+        filtered_moves = False
+        if self.isWhite:
+            filtered_moves = [pos for pos in moves if isPositionInBounds(pos) and pos not in white_pieces]
+        else:
+            filtered_moves = [pos for pos in moves if isPositionInBounds(pos) and pos not in black_pieces]
+        return filtered_moves
 
 
-	'''
-	Diagram of Knight's possible moves:
-	7 - - - - - - - -
-	6 - - - X - X - -
-	5 - - X - - - X -
-	4 - - - - N - - -
-	3 - - X - - - X -
-	2 - - - X - X - -
-	1 - - - - - - - -
-	0 - - - - - - - -
-  	  0 1 2 3 4 5 6 7
-  	'''
-	def getAllMoves(self):
-		moves = []
-		'''
-		How this works: Gets Knight moves for each column of diagram above, skips
-		0 as there is nothing at 0. Uses the fact that the knight always moves 3 squares to its advantage.
-		'''
-		for i in range(-2, 3):
-			if i == 0:
-				continue
-			moves.append(Position(self.pos.x + i, self.pos.y + 3 - abs(i)))
-			moves.append(Position(self.pos.x + i, self.pos.y - 3 + abs(i)))
-		#Gets rid of any moves that are out of bounds.
-		filtered_moves = [pos for pos in moves if isPositionInBounds(pos)]
-		return filtered_moves
-
-	def getLegalMovesExcludingCheck(self, white_pieces, black_pieces):
-		moves = []
-		'''
-		How this works: Gets Knight moves for each column of diagram above, skips
-		0 as there is nothing at 0. Uses the fact that the knight always moves 3 squares to its advantage.
-		'''
-		for i in range(-2, 3):
-			if i == 0:
-				continue
-			moves.append(Position(self.pos.x + i, self.pos.y + 3 - abs(i)))
-			moves.append(Position(self.pos.x + i, self.pos.y - 3 + abs(i)))
-		#Gets rid of any moves that are out of bounds.
-		filtered_moves = False
-		if self.isWhite:
-			filtered_moves = [pos for pos in moves if isPositionInBounds(pos) and pos not in white_pieces]
-		else:
-			filtered_moves = [pos for pos in moves if isPositionInBounds(pos) and pos not in black_pieces]
-		return filtered_moves
-
-#Class to represent a bishop piece
+# Class to represent a bishop piece
 class Bishop(Piece):
     def __init__(self, pos=Position(), isWhite=True):
         super().__init__(pos, isWhite)
@@ -266,7 +266,6 @@ class Bishop(Piece):
         return moves
 
 
-
 # Class to represent a rook piece
 class Rook(Piece):
     def __init__(self, pos=Position(), isWhite=True):
@@ -288,7 +287,7 @@ class Rook(Piece):
     def getAllMoves(self):
         moves = []
         '''
-        How this works: Loops through the four paterns -- Up right, up left, down right, and down left.
+        How this works: Loops through the four paterns -- Up, down, left, right
         '''
 
         curr_position = Position(self.pos.x + 1, self.pos.y)
@@ -309,6 +308,49 @@ class Rook(Piece):
         curr_position = Position(self.pos.x, self.pos.y - 1)
         while (isPositionInBounds(curr_position)):
             moves.append(curr_position)
+            curr_position = Position(curr_position.x, curr_position.y - 1)
+        return moves
+
+    def getLegalMovesExcludingCheck(self, white_pieces, black_pieces):
+        moves = []
+        '''
+        How this works: Loops through the four paterns -- Up down, left, right
+        '''
+        my_pieces = 0
+        their_pieces = 0
+        if self.isWhite:
+            my_pieces = white_pieces
+            their_pieces = black_pieces
+        else:
+            my_pieces = black_pieces
+            their_pieces = white_pieces
+
+        curr_position = Position(self.pos.x + 1, self.pos.y)
+        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+            moves.append(curr_position)
+            if curr_position in their_pieces:
+                break
+            curr_position = Position(curr_position.x + 1, curr_position.y)
+
+        curr_position = Position(self.pos.x - 1, self.pos.y)
+        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+            moves.append(curr_position)
+            if curr_position in their_pieces:
+                break
+            curr_position = Position(curr_position.x - 1, curr_position.y)
+
+        curr_position = Position(self.pos.x, self.pos.y + 1)
+        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+            moves.append(curr_position)
+            if curr_position in their_pieces:
+                break
+            curr_position = Position(curr_position.x, curr_position.y + 1)
+
+        curr_position = Position(self.pos.x, self.pos.y - 1)
+        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+            moves.append(curr_position)
+            if curr_position in their_pieces:
+                break
             curr_position = Position(curr_position.x, curr_position.y - 1)
         return moves
 
