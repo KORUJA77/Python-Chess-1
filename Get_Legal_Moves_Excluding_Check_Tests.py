@@ -135,7 +135,6 @@ class TestPawnGetLegalMovesExcludingCheck(unittest.TestCase):
         expected_moves = []
         expected_moves.append(Position(4, 2))
         expected_moves.append(Position(5, 2))
-        print(len(moves))
         for move in moves:
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
@@ -354,7 +353,7 @@ class TestBishopGetLegalMovesExcludingCheck(unittest.TestCase):
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
 
-    def test_4_4_block_all(self):
+    def test_4_4_block_all_black(self):
         bishop = Bishop(Position(4, 4))
         white_pieces = {Position(4, 4): bishop,
                         Position(3, 3): Pawn(Position(3, 3)),
@@ -368,7 +367,7 @@ class TestBishopGetLegalMovesExcludingCheck(unittest.TestCase):
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
 
-    def test_4_4_take_all(self):
+    def test_4_4_take_all_black(self):
         bishop = Bishop(Position(4, 4))
         white_pieces = {Position(4, 4): bishop}
         black_pieces = {Position(3, 3): Pawn(Position(3, 3), False),
@@ -385,8 +384,8 @@ class TestBishopGetLegalMovesExcludingCheck(unittest.TestCase):
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
 
-class TestKnightGetLegalMovesExcludingCheck(unittest.TestCase):
 
+class TestKnightGetLegalMovesExcludingCheck(unittest.TestCase):
     def test_0_0_empty_board(self):
         knight = Knight(Position(0, 0))
         white_pieces = {Position(0, 0), knight}
@@ -445,6 +444,114 @@ class TestKnightGetLegalMovesExcludingCheck(unittest.TestCase):
         white_pieces = {}
         moves = knight.getLegalMovesExcludingCheck(white_pieces, black_pieces)
         expected_moves = []
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+
+class TestRookGetLegalMovesExcludingCheck(unittest.TestCase):
+    def test_4_4_empty_board(self):
+        rook = Rook(Position(4, 4))
+        white_pieces = {Position(4, 4): rook}
+        black_pieces = {}
+        expected_moves = rook.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = []
+        moves.append(Position(4, 5))
+        moves.append(Position(4, 6))
+        moves.append(Position(4, 7))
+        moves.append(Position(4, 3))
+        moves.append(Position(4, 2))
+        moves.append(Position(4, 1))
+        moves.append(Position(4, 0))
+        moves.append(Position(5, 4))
+        moves.append(Position(6, 4))
+        moves.append(Position(7, 4))
+        moves.append(Position(3, 4))
+        moves.append(Position(2, 4))
+        moves.append(Position(1, 4))
+        moves.append(Position(0, 4))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_4_4_block_all(self):
+        rook = Rook(Position(4, 4))
+        white_pieces = {Position(4, 4): rook,
+                        Position(4, 5): Bishop(Position(4, 5)),
+                        Position(5, 4): Bishop(Position(5, 4)),
+                        Position(3, 4): Bishop(Position(3, 4)),
+                        Position(4, 3): Bishop(Position(4, 3))}
+        black_pieces = {}
+        expected_moves = rook.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = []
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_4_4_take_all(self):
+        rook = Rook(Position(4, 4))
+        white_pieces = {Position(4, 4): rook}
+        black_pieces = {Position(4, 5): Bishop(Position(4, 5), False),
+                        Position(5, 4): Bishop(Position(5, 4), False),
+                        Position(3, 4): Bishop(Position(3, 4), False),
+                        Position(4, 3): Bishop(Position(4, 3), False)}
+        expected_moves = rook.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = [Position(4, 5), Position(5, 4), Position(3, 4), Position(4, 3)]
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    '''
+    BLACK TESTS
+    '''
+
+    def test_4_4_empty_board_black(self):
+        rook = Rook(Position(4, 4), False)
+        black_pieces = {Position(4, 4): rook}
+        white_pieces = {}
+        expected_moves = rook.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = []
+        moves.append(Position(4, 5))
+        moves.append(Position(4, 6))
+        moves.append(Position(4, 7))
+        moves.append(Position(4, 3))
+        moves.append(Position(4, 2))
+        moves.append(Position(4, 1))
+        moves.append(Position(4, 0))
+        moves.append(Position(5, 4))
+        moves.append(Position(6, 4))
+        moves.append(Position(7, 4))
+        moves.append(Position(3, 4))
+        moves.append(Position(2, 4))
+        moves.append(Position(1, 4))
+        moves.append(Position(0, 4))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_4_4_block_all_black(self):
+        rook = Rook(Position(4, 4), False)
+        black_pieces = {Position(4, 4): rook,
+                        Position(4, 5): Bishop(Position(4, 5), False),
+                        Position(5, 4): Bishop(Position(5, 4), False),
+                        Position(3, 4): Bishop(Position(3, 4), False),
+                        Position(4, 3): Bishop(Position(4, 3), False)}
+        white_pieces = {}
+        expected_moves = rook.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = []
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_4_4_take_all_black(self):
+        rook = Rook(Position(4, 4), False)
+        black_pieces = {Position(4, 4): rook}
+        white_pieces = {Position(4, 5): Bishop(Position(4, 5)),
+                        Position(5, 4): Bishop(Position(5, 4)),
+                        Position(3, 4): Bishop(Position(3, 4)),
+                        Position(4, 3): Bishop(Position(4, 3))}
+        expected_moves = rook.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = [Position(4, 5), Position(5, 4), Position(3, 4), Position(4, 3)]
         for move in moves:
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))

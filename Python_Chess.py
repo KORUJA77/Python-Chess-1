@@ -205,22 +205,22 @@ class Bishop(Piece):
         '''
 
         curr_position = Position(self.pos.x + 1, self.pos.y + 1)
-        while (isPositionInBounds(curr_position)):
+        while isPositionInBounds(curr_position):
             moves.append(curr_position)
             curr_position = Position(curr_position.x + 1, curr_position.y + 1)
 
         curr_position = Position(self.pos.x + 1, self.pos.y - 1)
-        while (isPositionInBounds(curr_position)):
+        while isPositionInBounds(curr_position):
             moves.append(curr_position)
             curr_position = Position(curr_position.x + 1, curr_position.y - 1)
 
         curr_position = Position(self.pos.x - 1, self.pos.y + 1)
-        while (isPositionInBounds(curr_position)):
+        while isPositionInBounds(curr_position):
             moves.append(curr_position)
             curr_position = Position(curr_position.x - 1, curr_position.y + 1)
 
         curr_position = Position(self.pos.x - 1, self.pos.y - 1)
-        while (isPositionInBounds(curr_position)):
+        while isPositionInBounds(curr_position):
             moves.append(curr_position)
             curr_position = Position(curr_position.x - 1, curr_position.y - 1)
         return moves
@@ -237,28 +237,28 @@ class Bishop(Piece):
             their_pieces = white_pieces
 
         curr_position = Position(self.pos.x + 1, self.pos.y + 1)
-        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+        while isPositionInBounds(curr_position) and curr_position not in my_pieces:
             moves.append(curr_position)
             if curr_position in their_pieces:
                 break
             curr_position = Position(curr_position.x + 1, curr_position.y + 1)
 
         curr_position = Position(self.pos.x + 1, self.pos.y - 1)
-        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+        while isPositionInBounds(curr_position) and curr_position not in my_pieces:
             moves.append(curr_position)
             if curr_position in their_pieces:
                 break
             curr_position = Position(curr_position.x + 1, curr_position.y - 1)
 
         curr_position = Position(self.pos.x - 1, self.pos.y + 1)
-        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+        while isPositionInBounds(curr_position) and curr_position not in my_pieces:
             moves.append(curr_position)
             if curr_position in their_pieces:
                 break
             curr_position = Position(curr_position.x - 1, curr_position.y + 1)
 
         curr_position = Position(self.pos.x - 1, self.pos.y - 1)
-        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+        while isPositionInBounds(curr_position) and curr_position not in my_pieces:
             moves.append(curr_position)
             if curr_position in their_pieces:
                 break
@@ -291,22 +291,22 @@ class Rook(Piece):
         '''
 
         curr_position = Position(self.pos.x + 1, self.pos.y)
-        while (isPositionInBounds(curr_position)):
+        while isPositionInBounds(curr_position):
             moves.append(curr_position)
             curr_position = Position(curr_position.x + 1, curr_position.y)
 
         curr_position = Position(self.pos.x - 1, self.pos.y)
-        while (isPositionInBounds(curr_position)):
+        while isPositionInBounds(curr_position):
             moves.append(curr_position)
             curr_position = Position(curr_position.x - 1, curr_position.y)
 
         curr_position = Position(self.pos.x, self.pos.y + 1)
-        while (isPositionInBounds(curr_position)):
+        while isPositionInBounds(curr_position):
             moves.append(curr_position)
             curr_position = Position(curr_position.x, curr_position.y + 1)
 
         curr_position = Position(self.pos.x, self.pos.y - 1)
-        while (isPositionInBounds(curr_position)):
+        while isPositionInBounds(curr_position):
             moves.append(curr_position)
             curr_position = Position(curr_position.x, curr_position.y - 1)
         return moves
@@ -326,28 +326,28 @@ class Rook(Piece):
             their_pieces = white_pieces
 
         curr_position = Position(self.pos.x + 1, self.pos.y)
-        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+        while isPositionInBounds(curr_position) and curr_position not in my_pieces:
             moves.append(curr_position)
             if curr_position in their_pieces:
                 break
             curr_position = Position(curr_position.x + 1, curr_position.y)
 
         curr_position = Position(self.pos.x - 1, self.pos.y)
-        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+        while isPositionInBounds(curr_position) and curr_position not in my_pieces:
             moves.append(curr_position)
             if curr_position in their_pieces:
                 break
             curr_position = Position(curr_position.x - 1, curr_position.y)
 
         curr_position = Position(self.pos.x, self.pos.y + 1)
-        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+        while isPositionInBounds(curr_position) and curr_position not in my_pieces:
             moves.append(curr_position)
             if curr_position in their_pieces:
                 break
             curr_position = Position(curr_position.x, curr_position.y + 1)
 
         curr_position = Position(self.pos.x, self.pos.y - 1)
-        while (isPositionInBounds(curr_position) and curr_position not in my_pieces):
+        while isPositionInBounds(curr_position) and curr_position not in my_pieces:
             moves.append(curr_position)
             if curr_position in their_pieces:
                 break
