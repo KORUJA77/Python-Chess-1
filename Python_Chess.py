@@ -383,6 +383,11 @@ class Queen(Piece):
         dummy_rook = Rook(Position(self.pos.x, self.pos.y))
         return dummy_bishop.getAllMoves() + dummy_rook.getAllMoves()
 
+    def getLegalMovesExcludingCheck(self, white_pieces, black_pieces):
+        dummy_bishop = Bishop(Position(self.pos.x, self.pos.y), self.isWhite)
+        dummy_rook = Rook(Position(self.pos.x, self.pos.y), self.isWhite)
+        return dummy_bishop.getLegalMovesExcludingCheck(white_pieces, black_pieces) + dummy_rook.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+
 
 # Class to represent a King piece
 class King(Piece):
