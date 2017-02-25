@@ -555,3 +555,157 @@ class TestRookGetLegalMovesExcludingCheck(unittest.TestCase):
         for move in moves:
             self.assertTrue(move in expected_moves)
         self.assertEqual(len(expected_moves), len(moves))
+
+
+class TestQueenGetLegalMovesExcludingCheck(unittest.TestCase):
+    def test_4_4_empty_board(self):
+        queen = Queen(Position(4, 4))
+        white_pieces = {Position(4, 4): queen}
+        black_pieces = {}
+        expected_moves = queen.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = []
+        moves.append(Position(4, 5))
+        moves.append(Position(4, 6))
+        moves.append(Position(4, 7))
+        moves.append(Position(4, 3))
+        moves.append(Position(4, 2))
+        moves.append(Position(4, 1))
+        moves.append(Position(4, 0))
+        moves.append(Position(5, 4))
+        moves.append(Position(6, 4))
+        moves.append(Position(7, 4))
+        moves.append(Position(3, 4))
+        moves.append(Position(2, 4))
+        moves.append(Position(1, 4))
+        moves.append(Position(0, 4))
+        moves.append(Position(5, 5))
+        moves.append(Position(6, 6))
+        moves.append(Position(7, 7))
+        moves.append(Position(5, 3))
+        moves.append(Position(6, 2))
+        moves.append(Position(7, 1))
+        moves.append(Position(3, 5))
+        moves.append(Position(2, 6))
+        moves.append(Position(1, 7))
+        moves.append(Position(3, 3))
+        moves.append(Position(2, 2))
+        moves.append(Position(1, 1))
+        moves.append(Position(0, 0))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_4_4_block_all(self):
+        queen = Queen(Position(4, 4))
+        white_pieces = {Position(4, 4): queen,
+                        Position(4, 5): Bishop(Position(4, 5)),
+                        Position(5, 4): Bishop(Position(5, 4)),
+                        Position(3, 4): Bishop(Position(3, 4)),
+                        Position(4, 3): Bishop(Position(4, 3)),
+                        Position(3, 3): Pawn(Position(3, 3)),
+                        Position(5, 5): Pawn(Position(5, 5)),
+                        Position(3, 5): Pawn(Position(3, 5)),
+                        Position(5, 3): Pawn(Position(5, 3))}
+        black_pieces = {}
+        expected_moves = queen.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = []
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_4_4_take_all(self):
+        queen = Queen(Position(4, 4))
+        white_pieces = {Position(4, 4): queen}
+        black_pieces = {Position(4, 5): Bishop(Position(4, 5), False),
+                        Position(5, 4): Bishop(Position(5, 4), False),
+                        Position(3, 4): Bishop(Position(3, 4), False),
+                        Position(4, 3): Bishop(Position(4, 3), False),
+                        Position(3, 3): Pawn(Position(3, 3), False),
+                        Position(5, 5): Pawn(Position(5, 5), False),
+                        Position(3, 5): Pawn(Position(3, 5), False),
+                        Position(5, 3): Pawn(Position(5, 3), False)
+                        }
+        expected_moves = queen.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = [Position(4, 5), Position(5, 4), Position(3, 4), Position(4, 3), Position(3, 3), Position(5, 5),
+                 Position(3, 5), Position(5, 3)]
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    '''
+    BLACK TESTS
+    '''
+
+    def test_4_4_empty_board_black(self):
+        queen = Queen(Position(4, 4), False)
+        white_pieces = {}
+        black_pieces = {Position(4, 4): queen}
+        expected_moves = queen.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = []
+        moves.append(Position(4, 5))
+        moves.append(Position(4, 6))
+        moves.append(Position(4, 7))
+        moves.append(Position(4, 3))
+        moves.append(Position(4, 2))
+        moves.append(Position(4, 1))
+        moves.append(Position(4, 0))
+        moves.append(Position(5, 4))
+        moves.append(Position(6, 4))
+        moves.append(Position(7, 4))
+        moves.append(Position(3, 4))
+        moves.append(Position(2, 4))
+        moves.append(Position(1, 4))
+        moves.append(Position(0, 4))
+        moves.append(Position(5, 5))
+        moves.append(Position(6, 6))
+        moves.append(Position(7, 7))
+        moves.append(Position(5, 3))
+        moves.append(Position(6, 2))
+        moves.append(Position(7, 1))
+        moves.append(Position(3, 5))
+        moves.append(Position(2, 6))
+        moves.append(Position(1, 7))
+        moves.append(Position(3, 3))
+        moves.append(Position(2, 2))
+        moves.append(Position(1, 1))
+        moves.append(Position(0, 0))
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_4_4_block_all_black(self):
+        queen = Queen(Position(4, 4), False)
+        black_pieces = {Position(4, 4): queen,
+                        Position(4, 5): Bishop(Position(4, 5), False),
+                        Position(5, 4): Bishop(Position(5, 4), False),
+                        Position(3, 4): Bishop(Position(3, 4), False),
+                        Position(4, 3): Bishop(Position(4, 3), False),
+                        Position(3, 3): Pawn(Position(3, 3), False),
+                        Position(5, 5): Pawn(Position(5, 5), False),
+                        Position(3, 5): Pawn(Position(3, 5), False),
+                        Position(5, 3): Pawn(Position(5, 3), False)}
+        white_pieces = {}
+        expected_moves = queen.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = []
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
+
+    def test_4_4_take_all_black(self):
+        queen = Queen(Position(4, 4), False)
+        black_pieces = {Position(4, 4): queen}
+        white_pieces = {Position(4, 5): Bishop(Position(4, 5)),
+                        Position(5, 4): Bishop(Position(5, 4)),
+                        Position(3, 4): Bishop(Position(3, 4)),
+                        Position(4, 3): Bishop(Position(4, 3)),
+                        Position(3, 3): Pawn(Position(3, 3)),
+                        Position(5, 5): Pawn(Position(5, 5)),
+                        Position(3, 5): Pawn(Position(3, 5)),
+                        Position(5, 3): Pawn(Position(5, 3))
+                        }
+        expected_moves = queen.getLegalMovesExcludingCheck(white_pieces, black_pieces)
+        moves = [Position(4, 5), Position(5, 4), Position(3, 4), Position(4, 3), Position(3, 3), Position(5, 5),
+                 Position(3, 5), Position(5, 3)]
+        for move in moves:
+            self.assertTrue(move in expected_moves)
+        self.assertEqual(len(expected_moves), len(moves))
